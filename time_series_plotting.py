@@ -8,6 +8,11 @@ import matplotlib.pyplot as plt
 import time
 
 
+mean_wo = pd.DataFrame()
+mean_w = pd.DataFrame()
+std_w = pd.DataFrame()
+std_wo = pd.DataFrame()
+
 start_time=time.time() #taking current time as starting time
 
 data_files=['2013.h5','2014.h5','2015.h5', '2016.h5'] 
