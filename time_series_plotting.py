@@ -91,4 +91,4 @@ plt.savefig('plot/std_w_muon_subtraction.pdf')
 plt.show()
 
 
-print "It took " + datetime.timedelta(datetime.datetime.now() - start_time) + " seconds to execute this"  
+#print "It took " + datetime.timedelta(datetime.datetime.now() - start_time) + " seconds to execute this"  
