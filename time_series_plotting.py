@@ -51,6 +51,12 @@ mean_w['day']= pd.to_datetime(mean_w['day'], format='%Y-%m-%d')
 mean_wo['day']= pd.to_datetime(mean_w['day'], format='%Y-%m-%d')
 
 
+fig_mean = plt.figure()
+ax= fig_mean.add_subplot(1,1,1)
+
+fig_std = plt.figure()
+ax1= fig_std1.add_subplot(1,1,1)
+
 plt.plot(mean_wo['day'], mean_wo['mean'], label= 'mean w/o muons')
 plt.grid(True)
 plt.ylabel('Mean w/o muons')
@@ -67,8 +73,13 @@ plt.legend(loc='best')
 mean_w=plt.gca()
 mean_w.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%m\n%Y'))
 plt.savefig('plot/mean_wo_muon_subtraction.pdf')
-#plt.savefig('plot/mean_compared.pdf')
 plt.show()
+
+ax.plot(mean_wo['day'], mean_wo['mean'], label= 'mean w/o muons')
+ax.plot(mean_w['day'], mean_w['mean'], label= 'mean w muons')
+ax.legend(loc='best')
+ax.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%m\n%Y'))
+ax.savefig('plot/mean_compared.pdf')
 
 
 plt.plot(std_w['day'], std_w['std'], label= 'std w muons')
@@ -87,8 +98,12 @@ plt.legend(loc='best')
 std_wo=plt.gca()
 std_wo.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%m\n%Y'))
 plt.savefig('plot/std_w_muon_subtraction.pdf')
-#plt.savefig('plot/std_compared.pdf')
 plt.show()
 
+ax1.plot(std_wo['day'], std_wo['std'], label= 'std w/o muon')
+ax1.plot(std_w['day'], std_w['std'], label= 'std w muons')
+ax1.legend(loc='best')
+ax1.xaxis.set_major_formatter(matplotlib.dates.DateFormatter('%m\n%Y'))
+ax1.savefig('plot/mean_compared.pdf')
 
-#print "It took " + datetime.timedelta(datetime.datetime.now() - start_time) + " seconds to execute this"  
+print "It took " + datetime.timedelta(datetime.datetime.now() - start_time) + " seconds to execute this"  
