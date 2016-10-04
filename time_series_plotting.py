@@ -17,7 +17,8 @@ std_wo = pd.DataFrame()
 
 start_time=datetime.datetime.now() #taking current time as starting time
 
-data_files=['2012.h5','2013.h5','2014.h5','2015.h5', '2016.h5', '2008_2011.h5'] 
+data_files=['2008_2011.h5','2012.h5','2013.h5','2014.h5','2015.h5', '2016.h5'] 
+path= '/localscratch/gmoment/subtracted_muons_data/h5_files/'
 #data_files=['2008_2011.h5','2014.h5','2015.h5', '2016.h5'] 
 #data_files=['2012.h5','2013.h5'] 
 
