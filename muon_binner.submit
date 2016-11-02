@@ -1,9 +1,0 @@
-Executable=/home/gmomente/muon_binner.py
-arguments = -sndata $(sndata) -run_number $(run_number) -dst $(dst) -year $(year) 
-log_dir =/home/gmomente/log/
-log=$(log_dir)/binner_$(run_number)_log.$(Process)
-output = $(log_dir)/binner_$(run_number)_out_cluster.$(Process)
-error = $(log_dir)/binner_$(run_number)_error_cluster.$(Process)
-Universe = vanilla
-getenv = False
-Queue 1
