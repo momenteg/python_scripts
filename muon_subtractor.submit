@@ -1,9 +1,0 @@
-Executable=/home/gmomente/muon_subtractor.py
-arguments = -binned_data $(binned_data) -run_number $(run_number) -year $(year)  
-log_dir =/home/gmomente/log/
-log=$(log_dir)/subtractor_$(run_number)_log.$(Process)
-output = $(log_dir)/subtractor_$(run_number)_out_cluster.$(Process)
-error = $(log_dir)/subtractor_$(run_number)_error_cluster.$(Process)
-Universe = vanilla
-getenv = False
-Queue 1
