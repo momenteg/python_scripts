@@ -11,11 +11,11 @@ parser.add_argument("-f","--submit-file",type=str, help="-file *.submit",require
 parser.add_argument("-y","--year",type=str, help="year to process",required=True,dest="year")
 args = parser.parse_args()
 
-path_binned_file = "/home/gmomente/data/binned/{0}/".format(args.year) #run_117798_0_binned.root
-
+#path_binned_file = "/home/gmomente/data/binned/{0}/".format(args.year) #run_117798_0_binned.root
+path_binned_file = "/data/user/gmomente/binned/"+args.year+"/"
 string = ""
 
-os.system("mkdir ~/data/subtracted/{0}".format(args.year))
+os.system("mkdir /data/user/gmomente/subtracted/{0}".format(args.year))
 
 filename_binned =  glob.glob(path_binned_file+"*.root")
 for filename in filename_binned:

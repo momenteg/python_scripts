@@ -14,7 +14,7 @@ parser.add_argument("-year",  type=str,
                     help="year", required=True, dest="year")
 args = parser.parse_args()
 
-output_path="~/data/binned/{0}".format(args.year)
+output_path="/data/user/gmomente/binned/{0}".format(args.year)
 scriptname='muon_binner_'+args.run_number+'.sh'
 
 f = open(scriptname, 'w')
@@ -22,14 +22,14 @@ f = open(scriptname, 'w')
 
 f.write("eval `/cvmfs/icecube.opensciencegrid.org/py2-v1/setup.sh`;\n")
 f.write("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/afritz/sndaq/afritz/trunk/install/lib/;\n")
-f.write("tar -zxf " + args.sndata + " -C $_CONDOR_SCRATCH_DIR;\n")
+f.write("mkdir $_CONDOR_SCRATCH_DIR/"+args.year+"/;\n")
+f.write("tar -zxf " + args.sndata + " -C $_CONDOR_SCRATCH_DIR/"+args.year+"/;\n")
 f.write("cd /home/afritz/sndaq/afritz/trunk/install;\n")
-#f.write("pwd;\n")
 #f.write("echo $LD_LIBRARY_PATH;\n" )
-f.write("./bin/sni3_muon_binner_for_monitoring --cut-zenith  --output-file "+output_path+"/run_" + args.run_number + "_binned.root --dst-file-list " + args.dst + " --end $_CONDOR_SCRATCH_DIR/"+ os.path.basename(args.sndata).split(".tar")[0]  +"*.root;\n")
-f.write("cd ~/;\n")
+f.write("./bin/sni3_muon_binner_for_monitoring --cut-zenith --output-file "+output_path+"/run_" + args.run_number + "_binned.root --dst-file-list " + args.dst + " --end $_CONDOR_SCRATCH_DIR/"+ args.year+"/"+os.path.basename(args.sndata).split(".tar")[0]  +"*.root;\n")
+#f.write("cd ~/;\n")
 #f.write("pwd;\n")
-f.write("rm -r ~/*"+args.run_number+"*.root ~/*.xml;\n")
+#f.write("rm -r ~/*"+args.run_number+"*.root ~/*.xml;\n")
 f.close()
 os.system('chmod +x '+scriptname)
 os.system('./'+scriptname)
