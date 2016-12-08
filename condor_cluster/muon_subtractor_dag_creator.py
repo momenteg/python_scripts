@@ -12,12 +12,13 @@ parser.add_argument("-y","--year",type=str, help="year to process",required=True
 args = parser.parse_args()
 
 #path_binned_file = "/home/gmomente/data/binned/{0}/".format(args.year) #run_117798_0_binned.root
-path_binned_file = "/data/user/gmomente/binned/"+args.year+"/"
+path_binned_file = "/data/user/gmomente/binned/{0}/".format(args.year)
 string = ""
 
 os.system("mkdir /data/user/gmomente/subtracted/{0}".format(args.year))
 
 filename_binned =  glob.glob(path_binned_file+"*.root")
+filename_binned.sort()
 for filename in filename_binned:
     run_number=os.path.basename(filename).split("run_")[1].split("_binned")[0] 
     jobName = "muon_subtractor_calc"
