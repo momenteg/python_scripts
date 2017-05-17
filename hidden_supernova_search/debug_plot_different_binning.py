@@ -55,7 +55,7 @@ def main():
 
     mount_mogon()
     list_signi_vs_distance_LL=[]
-    LL_debug= "mount_mogon/2010/debug/*LL*star_distr_0*"
+    LL_debug= "mount_mogon/201*/debug/*LL*star_distr_0*"
     neutr_types=["HI","HN"]
     binnings = ["500ms","1.0s", "1.5s", "4s", "10s","all"]
     signi_vs_distance_debug = pd.DataFrame()
