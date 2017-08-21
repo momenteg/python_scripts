@@ -3,6 +3,7 @@
 ## emails: momenteg@gmail.com / gmomente@icecube.wisc.edu
 
 import ROOT
+ROOT.PyConfig.IgnoreCommandLineOptions = True
 import numpy as np
 from root_numpy import root2array, tree2array
 import glob
@@ -19,6 +20,8 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument("-year",  type=str,
                     help="year", required=True, dest="year")
+parser.add_argument("-good_list_used",  type=bool,
+                    help="good_list_used: use good run list (True/False)", required=False, default=True, dest="good_list_used")
 args = parser.parse_args()
 
 
@@ -27,9 +30,9 @@ path= '/localscratch/gmoment/subtracted_muons_data/root_files/{0}_cut_zenith/'.f
 json_file='good_run_list/good_list_{0}'.format(args.year)
 name_output = '{0}_cut_zenith'.format(args.year)
 dest = '/localscratch/gmoment/subtracted_muons_data/h5_files/'
-good_list_used = False
 
 hdf = pd.HDFStore(name_output+'.h5')
+df=pd.DataFrame()
 good_run_list=[]
 low_cut_signi=-10
 
@@ -57,11 +60,11 @@ for filename in filenames:
     data_outtree = tree2array(outtree)
 
     try:
-        condition=np.where(good_list_used 
+        condition=np.where(args.good_list_used 
                 ,(( data_tree['bin_time'].max() -  data_tree['bin_time'].min() ) > good_run_minimum_length and data_outtree['run_number'] in good_run_list )
                 ,(( data_tree['bin_time'].max() -  data_tree['bin_time'].min() ) > good_run_minimum_length))
-    if(condition):
-        begin_of_year=datetime.datetime(year=int(data_outtree['year'].mean()), month=1, day=1)
+	if(condition):
+	    begin_of_year=datetime.datetime(year=int(data_outtree['year'].mean()), month=1, day=1)
             day= begin_of_year + datetime.timedelta(seconds=data_tree['bin_time'].mean())
             index_signi_edge= np.where( np.logical_not( data_tree["signi_bin"]<=low_cut_signi) )#cutting the lower limit of significance
             d= {'day' : day.strftime('%Y-%m-%d'),
@@ -69,6 +72,7 @@ for filename in filenames:
                 'Significance_with_muons': data_tree['signi_bin_before'][index_signi_edge],
                 'muon_number': data_tree['dst_chan_bin'][index_signi_edge].mean()
                 }
+            #df = pd.concat([df,pd.DataFrame(d)])
             df = pd.DataFrame(d)
             hdf.put('Timeseries', df, format='table', data_columns=True, append = True)
             bar.next()
@@ -78,11 +82,12 @@ for filename in filenames:
     except ValueError:
         bar.next()
         continue
-
+    
+#hdf.put('Timeseries', df, format='table', data_columns=True, append = True)
 bar.finish()
 
 infos={"minimum_lenght_run" : [good_run_minimum_length], 
-        "good_list_used":good_list_used,
+        "good_list_used":args.good_list_used,
         'low_cut_signi':low_cut_signi}
 
 pd_infos=pd.DataFrame(infos)
