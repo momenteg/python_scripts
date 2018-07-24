@@ -2,7 +2,7 @@ First step:
 - binned the data 
 	- run the dag creator: 
 		example $python muon_binner_dag_creator.py -d binning_2011.dag -y 2011
-		NB: File paths are hard coded in the script and my change with the years
+		NB: File paths are hard coded in the script and might change with the years
 			it will take some minutes to create the dag file, 'cause I'm a noob :(
 	- $ssh submitter
 	- $condor_submit_dag binning_2011.dag
